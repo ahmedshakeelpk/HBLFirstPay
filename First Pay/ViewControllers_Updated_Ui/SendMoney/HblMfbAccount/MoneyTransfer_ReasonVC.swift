@@ -43,17 +43,23 @@ class MoneyTransfer_ReasonVC: BaseClassVC {
         }
         showActivityIndicator()
         let compelteUrl = GlobalConstants.BASE_URL + "Transactions/v1/getFtTransPurpose"
-        let header = ["Accept":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+        let header: HTTPHeaders = ["Accept":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
         
         print(header)
         print(compelteUrl)
         
         NetworkManager.sharedInstance.enableCertificatePinning()
-        
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<GetReasonsModel>) in
-            self.hideActivityIndicator()
+        let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+        let error: Error!
+        sessionManger.request(compelteUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<GetReasonsModel>().map(JSONObject: response.result)
+            self.reasonsObj = forecasts
+                   self.hideActivityIndicator()
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<GetReasonsModel>) in
+//            self.hideActivityIndicator()
             if response.response?.statusCode == 200 {
-                self.reasonsObj = response.result.value
+//                self.reasonsObj = response.result.value
                 if self.reasonsObj?.responsecode == 2 || self.reasonsObj?.responsecode == 1 {
                     for i in self.reasonsObj?.reasonsData! ?? []
                     {
@@ -74,7 +80,7 @@ class MoneyTransfer_ReasonVC: BaseClassVC {
             }
             else {
                 
-                print(response.result.value)
+//                print(response.result.value)
                 print(response.response?.statusCode)
             }
         }

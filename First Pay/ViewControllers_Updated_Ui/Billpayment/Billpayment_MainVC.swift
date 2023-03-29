@@ -68,18 +68,25 @@ class Billpayment_MainVC: BaseClassVC {
         showActivityIndicator()
         
         let compelteUrl = GlobalConstants.BASE_URL + "Transactions/v1/getParentCompanies"
-        let header = ["Content-Type":"application/json","Authorization":"Bearer \(DataManager.instance.accessToken!)"]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"Bearer \(DataManager.instance.accessToken!)"]
         
         print(header)
         print(compelteUrl)
         
         NetworkManager.sharedInstance.enableCertificatePinning()
-
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<BillPaymentCompanies>) in
-            
+        let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+        let error: Error!
+        sessionManger.request(compelteUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<BillPaymentCompanies>().map(JSONObject: response.result)
+            self.billCompanyObj = forecasts
             self.hideActivityIndicator()
+
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<BillPaymentCompanies>) in
             
-            self.billCompanyObj = response.result.value
+//            self.hideActivityIndicator()
+            
+//            self.billCompanyObj = response.result.value
             if response.response?.statusCode == 200 {
                 
                 if self.billCompanyObj?.responsecode == 2 || self.billCompanyObj?.responsecode == 1 {

@@ -266,17 +266,23 @@ class Mobile_VerificationVC: BaseClassVC, UITextFieldDelegate {
         print(parameters)
 
         let params = ["apiAttribute1":result.apiAttribute1,"apiAttribute2":result.apiAttribute2,"channelId":"\(DataManager.instance.channelID)"]
-        let header = ["Content-Type":"application/json","Authorization":DataManager.instance.clientSecretReg]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":DataManager.instance.clientSecretReg]
         print(params)
         print(compelteUrl)
 
         NetworkManager.sharedInstance.enableCertificatePinning()
-//
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<mobileRegistrationModel>) in
-
+        let error: Error!
+        let sessionManger = APIs.shared.sessionManger(timeOut: 410)
+        sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<mobileRegistrationModel>().map(JSONObject: response.result)
+            self.mobileRegistrationObj = forecasts
             self.hideActivityIndicator()
-
-            self.mobileRegistrationObj = response.result.value
+        //        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<mobileRegistrationModel>) in
+//
+//            self.hideActivityIndicator()
+//            self.mobileRegistrationObj = response.result.value
+            
             if response.response?.statusCode == 200 {
 
                 if self.mobileRegistrationObj?.responsecode == 2 || self.mobileRegistrationObj?.responsecode == 1 {

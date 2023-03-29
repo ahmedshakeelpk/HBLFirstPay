@@ -215,7 +215,7 @@ class WalletToWalletVC: BaseClassVC,UITextFieldDelegate {
         let params = ["apiAttribute1":result.apiAttribute1,"apiAttribute2":result.apiAttribute2,"channelId":"\(DataManager.instance.channelID)"]
 //        let header = ["Content-Type":"application/json","Authorization":DataManager.instance.clientSecretReg]
         
-        let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
 //        print(result.apiAttribute1)
 //        print(result.apiAttribute2)
         print(params)
@@ -223,11 +223,19 @@ class WalletToWalletVC: BaseClassVC,UITextFieldDelegate {
 //        print(header)
         
         NetworkManager.sharedInstance.enableCertificatePinning()
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<FTApiResponse>) in
+        
+        let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+        let error: Error!
+        sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<FTApiResponse>().map(JSONObject: response.result)
+            self.transactionApiResponseObj = forecasts
+            self.hideActivityIndicator()
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<FTApiResponse>) in
             
             //         Alamofire.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<FundInitiateModel>) in
-            self.hideActivityIndicator()
-            self.transactionApiResponseObj = response.result.value
+//            self.hideActivityIndicator()
+//            self.transactionApiResponseObj = response.result.value
             if response.response?.statusCode == 200 {
                 
                                 if self.transactionApiResponseObj?.responsecode == 2 || self.transactionApiResponseObj?.responsecode == 1 {
@@ -274,17 +282,24 @@ class WalletToWalletVC: BaseClassVC,UITextFieldDelegate {
         }
         showActivityIndicator()
         let compelteUrl = GlobalConstants.BASE_URL + "Transactions/v1/getFtTransPurpose"
-        let header = ["Accept":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+        let header: HTTPHeaders = ["Accept":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
         
         print(header)
         print(compelteUrl)
         
         NetworkManager.sharedInstance.enableCertificatePinning()
         
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<GetReasonsModel>) in
-            self.hideActivityIndicator()
+        let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+       let error: Error!
+       sessionManger.request(compelteUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).response { (response) in
+           sessionManger.cancelAllRequests()
+           let forecasts = Mapper<GetReasonsModel>().map(JSONObject: response.result)
+           self.reasonsObj = forecasts
+           self.hideActivityIndicator()
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<GetReasonsModel>) in
+//            self.hideActivityIndicator()
             if response.response?.statusCode == 200 {
-                self.reasonsObj = response.result.value
+//                self.reasonsObj = response.result.value
                 if self.reasonsObj?.responsecode == 2 || self.reasonsObj?.responsecode == 1 {
                    
 //                    self.reasonsList = self.reasonsObj!.stringReasons
@@ -297,7 +312,7 @@ class WalletToWalletVC: BaseClassVC,UITextFieldDelegate {
             }
             else {
                 
-                print(response.result.value)
+//                print(response.result.value)
                 print(response.response?.statusCode)
             }
         }

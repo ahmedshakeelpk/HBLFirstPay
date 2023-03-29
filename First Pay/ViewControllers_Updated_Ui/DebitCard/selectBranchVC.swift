@@ -47,18 +47,23 @@ class selectBranchVC: BaseClassVC, UISearchBarDelegate {
         showActivityIndicator()
         
         let compelteUrl = GlobalConstants.BASE_URL + "DebitCard/v1/getBranches"
-        let header = ["Content-Type":"application/json","Authorization":"Bearer \(DataManager.instance.accessToken!)"]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"Bearer \(DataManager.instance.accessToken!)"]
         
         print(header)
         print(compelteUrl)
         
         NetworkManager.sharedInstance.enableCertificatePinning()
-        
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<GetAllBranchesModel>) in
+        let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+        let error: Error!
+        sessionManger.request(compelteUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<GetAllBranchesModel>().map(JSONObject: response.result)
+            self.getBranchesObj = forecasts
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<GetAllBranchesModel>) in
             
             self.hideActivityIndicator()
             
-            self.getBranchesObj = response.result.value
+//            self.getBranchesObj = response.result.value
             if response.response?.statusCode == 200 {
                 
                 if self.getBranchesObj?.responsecode == 2 || self.getBranchesObj?.responsecode == 1 {

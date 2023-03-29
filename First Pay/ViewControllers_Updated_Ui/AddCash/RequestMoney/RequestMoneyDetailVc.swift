@@ -107,7 +107,7 @@ contactPicker.delegate = self
           print(result.apiAttribute2)
           
           let params = ["apiAttribute1":result.apiAttribute1,"apiAttribute2":result.apiAttribute2,"channelId":"\(DataManager.instance.channelID)"]
-          let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+          let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
           print(params)
           print(parameters)
           print(compelteUrl)
@@ -116,12 +116,16 @@ contactPicker.delegate = self
           
           
           let sessionManger = APIs.shared.sessionManger(timeOut: 20)
-          
-          NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { [self] (response: DataResponse<TitleFetchModel>) in
+          let error: Error!
+          sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+              sessionManger.cancelAllRequests()
+              let forecasts = Mapper<TitleFetchModel>().map(JSONObject: response.result)
+              self.titleFetchObj = forecasts
+//          NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { [self] (response: DataResponse<TitleFetchModel>) in
               
               self.hideActivityIndicator()
               
-              self.titleFetchObj = response.result.value
+//              self.titleFetchObj = response.result.value
               if response.response?.statusCode == 200 {
                   if self.titleFetchObj?.responsecode == 2 || self.titleFetchObj?.responsecode == 1 {
                       let vc = self.storyboard?.instantiateViewController(withIdentifier: "RequestMoneyConfirmationVc") as!   RequestMoneyConfirmationVc

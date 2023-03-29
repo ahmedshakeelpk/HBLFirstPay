@@ -51,19 +51,24 @@ class City_selectionVC: BaseClassVC, UITextFieldDelegate, UISearchBarDelegate {
         showActivityIndicator()
         
         let compelteUrl = GlobalConstants.BASE_URL + "WalletCreation/v1/getAllCities"
-        let header = ["Content-Type":"application/json","Authorization":DataManager.instance.AuthToken]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":DataManager.instance.AuthToken]
         
         print(header)
         print(compelteUrl)
         
         NetworkManager.sharedInstance.enableCertificatePinning()
-        
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { [self] (response: DataResponse<CitiesList>) in
+        let error: Error!
+        let sessionManger = APIs.shared.sessionManger(timeOut: 410)
+        sessionManger.request(compelteUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<CitiesList>().map(JSONObject: response.result)
+            self.cityListObj = forecasts
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { [self] (response: DataResponse<CitiesList>) in
      //       Alamofire.request(compelteUrl, headers:header).responseObject { (response: DataResponse<CitiesList>) in
             
             self.hideActivityIndicator()
-            
-            self.cityListObj = response.result.value
+//
+//            self.cityListObj = response.result.value
             if response.response?.statusCode == 200 {
                 
                 if self.cityListObj?.responsecode == 2 || self.cityListObj?.responsecode == 1 {
@@ -78,14 +83,14 @@ class City_selectionVC: BaseClassVC, UITextFieldDelegate, UISearchBarDelegate {
                     
                     self.arrCitiesList = self.cityListObj?.stringCities
                  
-                    filteredData =  self.arrCitiesList
+                    self.filteredData =  self.arrCitiesList
                    
                    //                print("cityid",self.cityId)
                     print("get city data", self.filteredData)
                    
-                    tableview.delegate = self
-                    tableview.dataSource = self
-                    tableview.reloadData()
+                    self.tableview.delegate = self
+                    self.tableview.dataSource = self
+                    self.tableview.reloadData()
 //                    self.methodDropDownCities(Cities: self.arrCitiesList!)
 //                    self.getRefferID()
                 }

@@ -376,20 +376,23 @@ class Statement_ReportVC: BaseClassVC,MFMessageComposeViewControllerDelegate, UI
         
         let compelteUrl = GlobalConstants.BASE_URL + "getDisputeTypes"
         
-        let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
        
         
         print(header)
         print(compelteUrl)
         
         NetworkManager.sharedInstance.enableCertificatePinning()
-        
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<GetDisputeTypesModel>) in
-            
-            
-            self.hideActivityIndicator()
-            
-            self.disputeTypesObj = response.result.value
+        let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+        let error: Error!
+        sessionManger.request(compelteUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<GetDisputeTypesModel>().map(JSONObject: response.result)
+            self.disputeTypesObj = forecasts
+                   self.hideActivityIndicator()
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<GetDisputeTypesModel>) in
+//            self.hideActivityIndicator()
+//            self.disputeTypesObj = response.result.value
             
             if response.response?.statusCode == 200 {
                 
@@ -445,19 +448,23 @@ class Statement_ReportVC: BaseClassVC,MFMessageComposeViewControllerDelegate, UI
         print(result.apiAttribute2)
         let params = ["apiAttribute1":result.apiAttribute1,"apiAttribute2":result.apiAttribute2,"channelId":"\(DataManager.instance.channelID)"]
 
-        let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
         print(params)
         print(compelteUrl)
         print(header)
 
         NetworkManager.sharedInstance.enableCertificatePinning()
-
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<GenericResponseModel>) in
-
-
-            self.hideActivityIndicator()
-
-            self.genResObj = response.result.value
+        let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+        let error: Error!
+        sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<GenericResponseModel>().map(JSONObject: response.result)
+            self.genResObj = forecasts
+                   self.hideActivityIndicator()
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<GenericResponseModel>) in
+//            self.hideActivityIndicator()
+//            self.genResObj = response.result.value
+//
             if response.response?.statusCode == 200 {
                 if self.genResObj?.responsecode == 2 || self.genResObj?.responsecode == 1 {
                     

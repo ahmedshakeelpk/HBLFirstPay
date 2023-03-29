@@ -206,20 +206,27 @@ class OTP_Mobile_VerificationVC: BaseClassVC ,UITextFieldDelegate{
            
            let params = ["ApiAttribute1":result.apiAttribute1,"ApiAttribute2":result.apiAttribute2,"channelId":"\(DataManager.instance.channelID)"]
            
-         let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.clientSecretReg ?? "nil")"]
+         let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.clientSecretReg ?? "nil")"]
    //
    //        print(params)
    //        print(compelteUrl)
            
            
            NetworkManager.sharedInstance.enableCertificatePinning()
-           NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<GenericResponse>) in
-               
-               //       Alamofire.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<VerifyOTP>) in
-               
-               self.hideActivityIndicator()
-               
-               self.genRespBaseObj = response.result.value
+         let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+         let error: Error!
+         sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+             sessionManger.cancelAllRequests()
+             let forecasts = Mapper<GenericResponse>().map(JSONObject: response.result)
+             self.genRespBaseObj = forecasts
+                    self.hideActivityIndicator()
+//           NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<GenericResponse>) in
+//
+//               //       Alamofire.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<VerifyOTP>) in
+//
+//               self.hideActivityIndicator()
+//
+//               self.genRespBaseObj = response.result.value
                
                if response.response?.statusCode == 200 {
                    if self.genRespBaseObj?.responsecode == 2 || self.genRespBaseObj?.responsecode == 1 {
@@ -270,15 +277,24 @@ class OTP_Mobile_VerificationVC: BaseClassVC ,UITextFieldDelegate{
         print(parameters)
         
         let params = ["apiAttribute1":result.apiAttribute1,"apiAttribute2":result.apiAttribute2,"channelId":"\(DataManager.instance.channelID)"]
-        let header = ["Content-Type":"application/json","Authorization":DataManager.instance.AuthToken]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":DataManager.instance.AuthToken]
         print(params)
         print(compelteUrl)
         print("header ",DataManager.instance.AuthToken )
         NetworkManager.sharedInstance.enableCertificatePinning()
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers: header ).responseObject { [self] (response: DataResponse<mobileVerificationModel>) in
-  
-            self.hideActivityIndicator()
-            self.mobileVerificationObj = response.result.value
+        
+        let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+        let error: Error!
+        sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<mobileVerificationModel>().map(JSONObject: response.result)
+            self.mobileVerificationObj = forecasts
+                   self.hideActivityIndicator()
+        
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers: header ).responseObject { [self] (response: DataResponse<mobileVerificationModel>) in
+//
+//            self.hideActivityIndicator()
+//            self.mobileVerificationObj = response.result.value
 //            if response.mobileVerificationObj?.statusCode == 200 {
                 
                 if self.mobileVerificationObj?.responsecode == 2 || self.mobileVerificationObj?.responsecode == 1 {

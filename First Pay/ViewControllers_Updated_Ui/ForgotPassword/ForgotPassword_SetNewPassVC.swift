@@ -266,17 +266,27 @@ print(result.apiAttribute2)
 
 let params = ["apiAttribute1":result.apiAttribute1,"apiAttribute2":result.apiAttribute2,"channelId":"\(DataManager.instance.channelID)"]
         
-let header = ["Content-Type":"application/json","Authorization":DataManager.instance.clientSecretReg]
+    let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":DataManager.instance.clientSecretReg]
 
 print(params)
 print(header)
 print(compelteUrl)
 NetworkManager.sharedInstance.enableCertificatePinning()
-NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<GenericResponseModel>) in
     
-    self.hideActivityIndicator()
-    
-    self.genericResponseObj = response.result.value
+    let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+    let error: Error!
+    sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+        sessionManger.cancelAllRequests()
+        let forecasts = Mapper<GenericResponseModel>().map(JSONObject: response.result)
+        self.genericResponseObj = forecasts
+               self.hideActivityIndicator()
+        
+//
+//NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<GenericResponseModel>) in
+//
+//    self.hideActivityIndicator()
+//
+//    self.genericResponseObj = response.result.value
     if response.response?.statusCode == 200 {
         
         if self.genericResponseObj?.responsecode == 2 || self.genericResponseObj?.responsecode == 1 {

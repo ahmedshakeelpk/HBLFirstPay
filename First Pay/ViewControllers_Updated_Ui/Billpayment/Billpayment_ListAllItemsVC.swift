@@ -58,19 +58,25 @@ class Billpayment_ListAllItemsVC: BaseClassVC , UISearchBarDelegate{
         
         let compelteUrl = GlobalConstants.BASE_URL + "Transactions/v1/getCompaniesById/\(self.BillComapnyid ?? 0)"
        
-        let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
         
         print(header)
         print(compelteUrl)
         
         NetworkManager.sharedInstance.enableCertificatePinning()
-        
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<UtilityBillCompaniesModel>) in
-            
-            
+        let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+        let error: Error!
+        sessionManger.request(compelteUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<UtilityBillCompaniesModel>().map(JSONObject: response.result)
+            self.billCompanyListObj = forecasts
             self.hideActivityIndicator()
-            
-            self.billCompanyListObj = response.result.value
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<UtilityBillCompaniesModel>) in
+//
+//
+//            self.hideActivityIndicator()
+//
+//            self.billCompanyListObj = response.result.value
             
             if response.response?.statusCode == 200 {
                 if self.billCompanyListObj?.responsecode == 2 || self.billCompanyListObj?.responsecode == 1 {

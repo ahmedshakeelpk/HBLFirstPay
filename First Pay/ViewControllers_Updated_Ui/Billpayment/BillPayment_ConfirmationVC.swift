@@ -110,14 +110,22 @@ class BillPayment_ConfirmationVC: BaseClassVC , UITextFieldDelegate {
         let result = (splitString(stringToSplit: base64EncodedString(params: parameters)))
         print(parameters)
         let params = ["apiAttribute1":result.apiAttribute1,"apiAttribute2":result.apiAttribute2,"channelId":"\(DataManager.instance.channelID)"]
-        let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
         print(params)
         print(compelteUrl)
         print(header)
         NetworkManager.sharedInstance.enableCertificatePinning()
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<FundsTransferApiResponse>) in
+        let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+        let error: Error!
+        sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<FundsTransferApiResponse>().map(JSONObject: response.result)
+            self.successmodelobj = forecasts
             self.hideActivityIndicator()
-             self.successmodelobj = response.result.value
+        
+      //  NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<FundsTransferApiResponse>) in
+//            self.hideActivityIndicator()
+//             self.successmodelobj = response.result.value
             if response.response?.statusCode == 200 {
                 if self.successmodelobj?.responsecode == 2 || self.successmodelobj?.responsecode == 1 {
                     self.move_to_next()

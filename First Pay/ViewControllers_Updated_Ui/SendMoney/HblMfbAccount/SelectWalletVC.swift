@@ -82,16 +82,25 @@ class SelectWalletVC: BaseClassVC, UITextFieldDelegate, UISearchBarDelegate  {
         showActivityIndicator()
         
         let compelteUrl = GlobalConstants.BASE_URL + "Transactions/v1/getImdList"
-        let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
         
         print(header)
         print(compelteUrl)
         
         NetworkManager.sharedInstance.enableCertificatePinning()
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<GetBankNames>) in
-            self.hideActivityIndicator()
+
+        let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+        let error: Error!
+        sessionManger.request(compelteUrl, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<GetBankNames>().map(JSONObject: response.result)
+            self.banksObj = forecasts
+                   self.hideActivityIndicator()
+        //        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, headers:header).responseObject { (response: DataResponse<GetBankNames>) in
+//            self.hideActivityIndicator()
+        
             if response.response?.statusCode == 200 {
-                self.banksObj = response.result.value
+//                self.banksObj = response.result.value
                 if self.banksObj?.responsecode == 2 || self.banksObj?.responsecode == 1 {
                     
                     
@@ -128,7 +137,7 @@ class SelectWalletVC: BaseClassVC, UITextFieldDelegate, UISearchBarDelegate  {
                     UtilManager.showAlertMessage(message: message, viewController: self)
                 }
 
-                    print(response.result.value)
+//                    print(response.result.value)
                     print(response.response?.statusCode)
                 
             }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1816E553294E3D64002392C6 /* City_selectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816E552294E3D64002392C6 /* City_selectionVC.swift */; };
 		1819E4A029D4B5B400FA2756 /* HZProgressHud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819E49F29D4B5B400FA2756 /* HZProgressHud.swift */; };
+		1819E4A229D4D52D00FA2756 /* 75.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1819E4A129D4D52D00FA2756 /* 75.gif */; };
 		182A13BB2966A72800DAD866 /* TransferAmountSuccessfulVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A13BA2966A72800DAD866 /* TransferAmountSuccessfulVC.swift */; };
 		182A13BD2966BACD00DAD866 /* MiniStatement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 182A13BC2966BACC00DAD866 /* MiniStatement.storyboard */; };
 		1836EEBF29599830007E8D0F /* NewsFeedRootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836EEBE29599830007E8D0F /* NewsFeedRootVC.swift */; };
@@ -360,6 +361,7 @@
 		17F4FE44546CC4B628AADEDD /* Pods-First PayUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-First PayUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-First PayUITests/Pods-First PayUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1816E552294E3D64002392C6 /* City_selectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City_selectionVC.swift; sourceTree = "<group>"; };
 		1819E49F29D4B5B400FA2756 /* HZProgressHud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HZProgressHud.swift; sourceTree = "<group>"; };
+		1819E4A129D4D52D00FA2756 /* 75.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 75.gif; sourceTree = "<group>"; };
 		182A13BA2966A72800DAD866 /* TransferAmountSuccessfulVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferAmountSuccessfulVC.swift; sourceTree = "<group>"; };
 		182A13BC2966BACC00DAD866 /* MiniStatement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MiniStatement.storyboard; sourceTree = "<group>"; };
 		1836EEBE29599830007E8D0F /* NewsFeedRootVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedRootVC.swift; sourceTree = "<group>"; };
@@ -758,6 +760,7 @@
 		1819E49C29D4A1A200FA2756 /* DataContainer */ = {
 			isa = PBXGroup;
 			children = (
+				1819E4A129D4D52D00FA2756 /* 75.gif */,
 				1819E49F29D4B5B400FA2756 /* HZProgressHud.swift */,
 				35E4A0A926D3811B00A83EA1 /* APIs.swift */,
 			);
@@ -1715,6 +1718,7 @@
 				3530B7542844D3AC00786A34 /* BBFAQs.html in Resources */,
 				18A98B7E29545FE200932696 /* ContactUs.storyboard in Resources */,
 				1888B60929A4B1F80028619D /* AddCash.storyboard in Resources */,
+				1819E4A229D4D52D00FA2756 /* 75.gif in Resources */,
 				184D3603296D650400B21BA1 /* SendMoney.storyboard in Resources */,
 				A29B3D1A2663DB310033B48D /* loager.json in Resources */,
 				A26EE2FB22818CD400704BD3 /* tc.html in Resources */,

@@ -86,19 +86,22 @@ class ServerManager  : BaseClassVC{
         
         print(passingPatameterDict)
         
-        Alamofire.request(url, method: .post, parameters: passingPatameterDict, encoding: JSONEncoding.default).responseJSON { response in
+        AF.request(url, method: .post, parameters: passingPatameterDict, encoding: URLEncoding.default).response(completionHandler: {
+            response in
+                    
+//        Alamofire.request(url, method: .post, parameters: passingPatameterDict, encoding: JSONEncoding.default).response { response in
             
            // UtilManager.dismissGlobalHUD()
             
-            if let result = response.result.value {
-                let JSON = result as! NSDictionary
-                print(JSON)
-            }
+//            if let result = response.result {
+//                let JSON = result as! NSDictionary
+//                print(JSON)
+//            }
             
             if let status = response.response?.statusCode {
                 switch(status){
                 case 200:
-                    if response.result.value != nil {
+                    if response.result != nil {
                         do {
                             let obj = try JSONDecoder().decode(T.self, from: response.data!)
                             completion(obj)
@@ -134,7 +137,7 @@ class ServerManager  : BaseClassVC{
                 print( "************" , response.response?.statusCode.description )
                 print("=-=-=-=-=-Error:  No Response from API / no internet connection ")
             }
-        }
+        })
         
         
     }//end generic function
@@ -150,9 +153,10 @@ class ServerManager  : BaseClassVC{
         print(url)
         
         
-        let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
-        
-        Alamofire.request(url, method: .post, encoding:  JSONEncoding.default, headers: header).responseJSON { (response ) in
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+        AF.request(url, method: .post, encoding: URLEncoding.default, headers: header).response(completionHandler: {
+            response in
+//        Alamofire.request(url, method: .post, encoding:  JSONEncoding.default, headers: header).responseJSON { (response ) in
         
         //Alamofire.request(url, method: .post, encoding: JSONEncoding.default).responseJSON { response in
             
@@ -160,16 +164,16 @@ class ServerManager  : BaseClassVC{
             
             
             
-            if let result = response.result.value {
-                let JSON = result as! NSDictionary
-                print(JSON)
-            }
+//            if let result = response.result.value {
+//                let JSON = result as! NSDictionary
+//                print(JSON)
+//            }
             
             
             if let status = response.response?.statusCode {
                 switch(status){
                 case 200:
-                    if response.result.value != nil {
+                    if response.result != nil {
                         do {
                             let obj = try JSONDecoder().decode(T.self, from: response.data!)
                             completion(obj)
@@ -198,7 +202,7 @@ class ServerManager  : BaseClassVC{
                 completion(nil)
                 print("=-=-=-=-=-Error:  No Response from API / no internet connection ")
             }
-        }
+        })
         
         
     }//end without parameters
@@ -216,9 +220,10 @@ class ServerManager  : BaseClassVC{
               "Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"
           ]
           
+        AF.request(url, method: .post, parameters: passingPatameterDict, encoding: URLEncoding.default).response(completionHandler: {
+            response in
           
-          
-          Alamofire.request(url, method: .post, parameters: passingPatameterDict, encoding:  JSONEncoding.default, headers: headers).responseJSON { (response ) in
+//          Alamofire.request(url, method: .post, parameters: passingPatameterDict, encoding:  JSONEncoding.default, headers: headers).responseJSON { (response ) in
               
               UtilManager.dismissGlobalHUD()
               
@@ -230,12 +235,12 @@ class ServerManager  : BaseClassVC{
                       debugPrint(response)
                       
                       
-                      let responseJson = response.result.value! as! NSDictionary
+                      let responseJson = response.result as! NSDictionary
                       print(responseJson)
                       
                       
                       ///=====
-                      if response.result.value != nil {
+                      if response.result != nil {
                           do {
                               let obj = try JSONDecoder().decode(T.self, from: response.data!)
                               completion(obj)
@@ -264,7 +269,7 @@ class ServerManager  : BaseClassVC{
                   completion(nil)
                   print("=-=-=-=-=-Error:  No Response from API / no internet connection ")
               }
-          }
+          })
           
           
       }//end generic function
@@ -287,8 +292,9 @@ class ServerManager  : BaseClassVC{
     //        ]
             
             print(headers)
-            
-            Alamofire.request(url, method: .get, encoding:  JSONEncoding.default, headers: headers).responseJSON { (response ) in
+        AF.request(url, method: .post, encoding: URLEncoding.default).response(completionHandler: {
+            response in
+//            Alamofire.request(url, method: .get, encoding:  JSONEncoding.default, headers: headers).responseJSON { (response ) in
                 
                 UtilManager.dismissGlobalHUD()
                 
@@ -297,9 +303,9 @@ class ServerManager  : BaseClassVC{
                     case 200:
 
                         debugPrint(response)
-                        if response.result.value != nil {
+                        if response.result != nil {
                             do {
-                                let responseJson = response.result.value as! NSDictionary
+                                let responseJson = response.result as! NSDictionary
                                 let obj = try JSONDecoder().decode(T.self, from: response.data!)
                                 print(responseJson)
                                 completion(obj)
@@ -330,7 +336,7 @@ class ServerManager  : BaseClassVC{
                     print("=-=-=-=-=-Error:  No Response from API / no internet connection ")
                 }//ho gia ha
                 
-            }
+            })
             
             
         }//end generic function
@@ -347,8 +353,9 @@ class ServerManager  : BaseClassVC{
             
             print(headers)
             
-           
-            Alamofire.request(url, method: .get, encoding:  JSONEncoding.default, headers: headers).responseJSON { (response ) in
+        AF.request(url, method: .get, encoding: URLEncoding.default).response(completionHandler: {
+            response in
+//            Alamofire.request(url, method: .get, encoding:  JSONEncoding.default, headers: headers).responseJSON { (response ) in
                 
                 UtilManager.dismissGlobalHUD()
                 
@@ -365,7 +372,7 @@ class ServerManager  : BaseClassVC{
                         
                         
                         ///=====
-                        if response.result.value != nil {
+                        if response.result != nil {
                             do {
                                 let obj = try JSONDecoder().decode(T.self, from: response.data!)
                                 completion(obj)
@@ -394,7 +401,7 @@ class ServerManager  : BaseClassVC{
                     completion(nil)
                     print("=-=-=-=-=-Error:  No Response from API / no internet connection ")
                 }
-            }
+            })
             
             
         }//end generic function
@@ -404,7 +411,7 @@ class ServerManager  : BaseClassVC{
             
         let url  = "\(GlobalConstants.BASE_URL)\(APIMethodName)"
         print(url)
-        let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
        
         var userCnic : String?
       
@@ -421,9 +428,10 @@ class ServerManager  : BaseClassVC{
         ]
   
         print(dict)
-           
-        Alamofire.request(url,  method: .post, parameters: dict, encoding: JSONEncoding.default, headers: header).responseJSON
-        {(response ) in
+        AF.request(url, method: .post, parameters: dict, encoding: JSONEncoding.default, headers: header).response(completionHandler: {
+            response in
+//        Alamofire.request(url,  method: .post, parameters: dict, encoding: JSONEncoding.default, headers: header).responseJSON
+//        {(response ) in
                 UtilManager.dismissGlobalHUD()
                 
                 if let status = response.response?.statusCode {
@@ -434,12 +442,12 @@ class ServerManager  : BaseClassVC{
                         debugPrint(response)
                         
                         
-                        let responseJson = response.result.value as! NSDictionary
+                        let responseJson = response.result as! NSDictionary
                         print(responseJson)
                         
                         
                         ///=====
-                        if response.result.value != nil {
+                        if response.result != nil {
                             do {
                                 let obj = try JSONDecoder().decode(T.self, from: response.data!)
                                 completion(obj)
@@ -468,7 +476,7 @@ class ServerManager  : BaseClassVC{
                     completion(nil)
                     print("=-=-=-=-=-Error:  No Response from API / no internet connection ")
                 }
-            }
+            })
             
             
         }
@@ -481,9 +489,10 @@ class ServerManager  : BaseClassVC{
         print(url)
         
         
-        let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
-        
-        Alamofire.request(url, method: .get, encoding:  JSONEncoding.default, headers: header).responseJSON { (response ) in
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+        AF.request(url, method: .get, encoding: JSONEncoding.default, headers: header).response(completionHandler: {
+            response in
+//        Alamofire.request(url, method: .get, encoding:  JSONEncoding.default, headers: header).responseJSON { (response ) in
         
         //Alamofire.request(url, method: .post, encoding: JSONEncoding.default).responseJSON { response in
             
@@ -491,16 +500,16 @@ class ServerManager  : BaseClassVC{
             
             
             
-            if let result = response.result.value {
-                let JSON = result as! NSDictionary
-                print(JSON)
-            }
+//            if let result = response.result.value {
+//                let JSON = result as! NSDictionary
+//                print(JSON)
+//            }
             
             
             if let status = response.response?.statusCode {
                 switch(status){
                 case 200:
-                    if response.result.value != nil {
+                    if response.result != nil {
                         do {
                             let obj = try JSONDecoder().decode(T.self, from: response.data!)
                             completion(obj)
@@ -529,14 +538,14 @@ class ServerManager  : BaseClassVC{
                 completion(nil)
                 print("=-=-=-=-=-Error:  No Response from API / no internet connection ")
             }
-        }
+        })
     }
     static func LimitManagmentwithParameter<T: Decodable>(APIMethodName : String, Token : String, completion: @escaping (T?) -> ()) {
             UtilManager.showProgress()
             
         let url  = "\(APIPath.baseurl)\(APIMethodName)"
         print(url)
-        let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
        
         var userCnic : String?
       
@@ -553,9 +562,10 @@ class ServerManager  : BaseClassVC{
         ]
   
         print(dict)
-           
-        Alamofire.request(url,  method: .post, parameters: dict, encoding: JSONEncoding.default, headers: header).responseJSON
-        {(response ) in
+        AF.request(url, method: .post, parameters: dict, encoding: JSONEncoding.default, headers: header).response(completionHandler: {
+            response in
+//        Alamofire.request(url,  method: .post, parameters: dict, encoding: JSONEncoding.default, headers: header).responseJSON
+//        {(response ) in
                 UtilManager.dismissGlobalHUD()
                 
                 if let status = response.response?.statusCode {
@@ -566,12 +576,12 @@ class ServerManager  : BaseClassVC{
                         debugPrint(response)
                         
                         
-                        let responseJson = response.result.value as! NSDictionary
+                        let responseJson = response.result as! NSDictionary
                         print(responseJson)
                         
                         
                         ///=====
-                        if response.result.value != nil {
+                        if response.result != nil {
                             do {
                                 let obj = try JSONDecoder().decode(T.self, from: response.data!)
                                 completion(obj)
@@ -600,7 +610,7 @@ class ServerManager  : BaseClassVC{
                     completion(nil)
                     print("=-=-=-=-=-Error:  No Response from API / no internet connection ")
                 }
-            }
+            })
             
             
         }

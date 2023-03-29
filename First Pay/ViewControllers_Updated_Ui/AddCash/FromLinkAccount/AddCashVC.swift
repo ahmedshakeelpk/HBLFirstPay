@@ -109,20 +109,25 @@ class AddCashVC: BaseClassVC, UITextFieldDelegate {
         let parameters = ["channelId":"\(DataManager.instance.channelID)","cnic":userCnic!, "imei":DataManager.instance.imei!]
         let result = (splitString(stringToSplit: base64EncodedString(params: parameters)))
         let params = ["apiAttribute1":result.apiAttribute1,"apiAttribute2":result.apiAttribute2,"channelId":"\(DataManager.instance.channelID)"]
-        let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken!)"]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken!)"]
         
         print(header)
         print(compelteUrl)
         print(params)
         
         NetworkManager.sharedInstance.enableCertificatePinning()
-        
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { [self] (response: DataResponse<getLinkedAccountModel>) in
+        let error: Error!
+        let sessionManger = APIs.shared.sessionManger(timeOut: 410)
+        sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<getLinkedAccountModel>().map(JSONObject: response.result)
+            self.LinkedAccountsObj = forecasts
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { [self] (response: DataResponse<getLinkedAccountModel>) in
             
             
             self.hideActivityIndicator()
             
-            self.LinkedAccountsObj = response.result.value
+//            self.LinkedAccountsObj = response.result.value
             if response.response?.statusCode == 200 {
             
                 if self.LinkedAccountsObj?.responsecode == 2 || self.LinkedAccountsObj?.responsecode == 1 {
@@ -132,10 +137,10 @@ class AddCashVC: BaseClassVC, UITextFieldDelegate {
 //                }
                     GlobalData.userAcc = self.LinkedAccountsObj?.data?[0].cbsAccountNo
                     GlobalData.userAcc =  GlobalData.userAcc?.replacingOccurrences(of: " ", with: "")
-                    labelAccountTitle.text = LinkedAccountsObj?.data?[0].cbsAccountTitle
-                    labelAccountNo.text = LinkedAccountsObj?.data?[0].cbsAccountNo
+                    self.labelAccountTitle.text = self.LinkedAccountsObj?.data?[0].cbsAccountTitle
+                    self.labelAccountNo.text = self.LinkedAccountsObj?.data?[0].cbsAccountNo
                     
-                    labelBankName.text = LinkedAccountsObj?.data?[0].branchName
+                    self.labelBankName.text = self.LinkedAccountsObj?.data?[0].branchName
                     
                     
                 }
@@ -178,7 +183,7 @@ class AddCashVC: BaseClassVC, UITextFieldDelegate {
         let params = ["apiAttribute1":result.apiAttribute1,"apiAttribute2":result.apiAttribute2,"channelId":"\(DataManager.instance.channelID)"]
 //        let header = ["Content-Type":"application/json","Authorization":DataManager.instance.clientSecretReg]
         
-        let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
 //        print(result.apiAttribute1)
 //        print(result.apiAttribute2)
         print(params)
@@ -186,12 +191,18 @@ class AddCashVC: BaseClassVC, UITextFieldDelegate {
 //        print(header)
         
         NetworkManager.sharedInstance.enableCertificatePinning()
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<FTApiResponse>) in
+        let error: Error!
+        let sessionManger = APIs.shared.sessionManger(timeOut: 410)
+        sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<FTApiResponse>().map(JSONObject: response.result)
+            self.transactionApiResponseObj = forecasts
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<FTApiResponse>) in
             
             //         Alamofire.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<FundInitiateModel>) in
           
             self.hideActivityIndicator()
-            self.transactionApiResponseObj = response.result.value
+//            self.transactionApiResponseObj = response.result.value
             if response.response?.statusCode == 200 {
                 
                         if self.transactionApiResponseObj?.responsecode == 2 || self.transactionApiResponseObj?.responsecode == 1 {

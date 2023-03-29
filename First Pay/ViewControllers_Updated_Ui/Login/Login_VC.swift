@@ -307,19 +307,25 @@ if let url = URL(string: "http://www.apple.com/euro/ios/ios8/a/generic/images/og
 
         // longitude and latitude round off to 4 digits
         
-        let header = ["Content-Type":"application/json","Authorization":DataManager.instance.clientSecret]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":DataManager.instance.clientSecret]
         
         
         print(params)
         print(compelteUrl)
         NetworkManager.sharedInstance.enableCertificatePinning()
-//
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<login>) in
-//            Alamofire.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<LoginActionModel>) in
-            self.hideActivityIndicator()
-            self.loginObj = response.result.value
+        let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+        let error: Error!
+        sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
+            let forecasts = Mapper<login>().map(JSONObject: response.result)
+            self.loginObj = forecasts
+                   self.hideActivityIndicator()
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<login>) in
+////            Alamofire.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<LoginActionModel>) in
+//            self.hideActivityIndicator()
+//            self.loginObj = response.result.value
             if response.response?.statusCode == 200 {
-                self.loginObj = response.result.value
+//                self.loginObj = response.result.value
                 if self.loginObj?.responsecode == 2 || self.loginObj?.responsecode == 1 {
                     if self.loginObj?.data != nil{
                         if let accessToken = self.loginObj?.data?.token{
@@ -354,7 +360,7 @@ if let url = URL(string: "http://www.apple.com/euro/ios/ios8/a/generic/images/og
 //                    self.showDefaultAlert(title: "", message: message)
 //                }
             }
-                print(response.result.value)
+//                print(response.result.value)
                 print(response.response?.statusCode)
             }
 }

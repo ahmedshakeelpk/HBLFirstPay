@@ -14,7 +14,7 @@ class HZProgressHud: UIViewController {
     let spinnerCircleView : UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .colorApp
+        view.backgroundColor = UIColor.blueColor
         return view
     }()
     

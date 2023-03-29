@@ -101,19 +101,24 @@ class DebitCardPostalAddressConfirmationVC: BaseClassVC {
        
        let params = ["apiAttribute1":result.apiAttribute1,"apiAttribute2":result.apiAttribute2,"channelId":"\(DataManager.instance.channelID)"]
        
-       let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
+       let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken ?? "nil")"]
        
        print(params)
        print(compelteUrl)
        
        NetworkManager.sharedInstance.enableCertificatePinning()
-       
-       NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<GenericResponse>) in
+       let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+       let error: Error!
+       sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+           sessionManger.cancelAllRequests()
+           let forecasts = Mapper<GenericResponse>().map(JSONObject: response.result)
+           self.genericObj = forecasts
+//       NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<GenericResponse>) in
            
            
            self.hideActivityIndicator()
            
-           self.genericObj = response.result.value
+//           self.genericObj = response.result.value
            if response.response?.statusCode == 200 {
                
                if self.genericObj?.responsecode == 2 || self.genericObj?.responsecode == 1 {

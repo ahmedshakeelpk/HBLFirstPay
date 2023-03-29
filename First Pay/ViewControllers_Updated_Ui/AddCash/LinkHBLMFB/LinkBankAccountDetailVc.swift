@@ -114,11 +114,11 @@ class LinkBankAccountDetailVc: BaseClassVC, UITextFieldDelegate {
         
         NetworkManager.sharedInstance.enableCertificatePinning()
         let error: Error!
-        
         let sessionManger = APIs.shared.sessionManger(timeOut: 410)
         sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
             sessionManger.cancelAllRequests()
-
+            let forecasts = Mapper<otpVerificationModel>().map(JSONObject: response.result)
+            self.genericresponseObj = forecasts
 
 //        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<otpVerificationModel, AFError>) in
             
@@ -126,11 +126,7 @@ class LinkBankAccountDetailVc: BaseClassVC, UITextFieldDelegate {
             self.hideActivityIndicator()
             
             //let forecasts = Mapper<otpVerificationModel>().mapArray(JSONObject: response.result)
-            
-            let forecasts = Mapper<otpVerificationModel>().map(JSONObject: response.result)
 //            self.genericresponseObj = response.result
-            self.genericresponseObj = forecasts
-
             
             if response.response?.statusCode == 200 {
                 

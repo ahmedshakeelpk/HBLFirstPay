@@ -321,15 +321,22 @@ class Set_PasswordVC:  BaseClassVC , UITextFieldDelegate {
             print(parameters)
             
             let params = ["apiAttribute1":result.apiAttribute1,"apiAttribute2":result.apiAttribute2,"channelId":"\(DataManager.instance.channelID)"]
-            let header = ["Content-Type":"application/json","Authorization":DataManager.instance.AuthToken]
+            let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":DataManager.instance.AuthToken]
             print(params)
             print(compelteUrl)
             
             NetworkManager.sharedInstance.enableCertificatePinning()
-            NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<setLoginPinModel>) in
-      
+            let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+            let error: Error!
+            sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+                sessionManger.cancelAllRequests()
+                let forecasts = Mapper<setLoginPinModel>().map(JSONObject: response.result)
+                self.setLoginPinObj = forecasts
                 self.hideActivityIndicator()
-                self.setLoginPinObj = response.result.value
+//            NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { (response: DataResponse<setLoginPinModel>) in
+      
+//                self.hideActivityIndicator()
+//                self.setLoginPinObj = response.result.value
                 if response.response?.statusCode == 200 {
                     
                     if self.setLoginPinObj?.responsecode == 2 || self.setLoginPinObj?.responsecode == 1 {
