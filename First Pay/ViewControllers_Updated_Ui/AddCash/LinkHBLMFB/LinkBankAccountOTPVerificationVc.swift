@@ -9,7 +9,7 @@
 import UIKit
 import OTPTextField
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 import PinCodeTextField
 import SwiftKeychainWrapper
 class LinkBankAccountOTPVerificationVc: BaseClassVC ,UITextFieldDelegate  {

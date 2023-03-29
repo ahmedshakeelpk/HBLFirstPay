@@ -9,7 +9,7 @@
 import UIKit
 import PasswordTextField
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 import SwiftKeychainWrapper
 import SwiftyRSA
 class ActivationDebitCardSetPinVC: BaseClassVC,UITextFieldDelegate {

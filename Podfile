@@ -8,9 +8,9 @@ target 'First Pay' do
   # Pods for First Pay
   pod 'IQKeyboardManager'
   pod 'KYDrawerController'
-  pod 'Alamofire' , '~> 4.7.3'
-  pod 'AlamofireObjectMapper'
-   pod 'Toaster', '~> 2.3'
+  pod 'Alamofire', '~> 5.6.4'
+  pod 'ObjectMapper'
+  pod 'Toaster', '~> 2.3'
   pod 'SwiftyJSON'
   pod 'PinCodeTextField'
   pod 'SwiftKeychainWrapper', '~> 3.0'

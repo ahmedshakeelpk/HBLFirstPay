@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 import SwiftKeychainWrapper
 class LinkBankAccountListVC: BaseClassVC {
 //    var  accountTitle :String?
@@ -49,26 +49,35 @@ class LinkBankAccountListVC: BaseClassVC {
         let parameters = ["channelId":"\(DataManager.instance.channelID)","cnic":userCnic!, "imei":DataManager.instance.imei!]
         let result = (splitString(stringToSplit: base64EncodedString(params: parameters)))
         let params = ["apiAttribute1":result.apiAttribute1,"apiAttribute2":result.apiAttribute2,"channelId":"\(DataManager.instance.channelID)"]
-        let header = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken!)"]
+        let header: HTTPHeaders = ["Content-Type":"application/json","Authorization":"\(DataManager.instance.accessToken!)"]
         
         print(header)
         print(compelteUrl)
         print(params)
         
         NetworkManager.sharedInstance.enableCertificatePinning()
+//
+//        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { [self] (response: DataResponse<GetCBSAccounts>) in
+        let error: Error!
         
-        NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { [self] (response: DataResponse<GetCBSAccounts>) in
-            
+        let sessionManger = APIs.shared.sessionManger(timeOut: 410)
+        sessionManger.request(compelteUrl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: header).response { (response) in
+            sessionManger.cancelAllRequests()
             
             self.hideActivityIndicator()
             
-            self.cbsAccountsObj = response.result.value
+//            self.cbsAccountsObj = response.result.value
+            
+            let forecasts = Mapper<GetCBSAccounts>().map(JSONObject: response.result)
+//            self.genericresponseObj = response.result
+            self.cbsAccountsObj = forecasts
+            
             if response.response?.statusCode == 200 {
             
                 if self.cbsAccountsObj?.responsecode == 2 || self.cbsAccountsObj?.responsecode == 1 {
                     if self.cbsAccountsObj?.accdata?.count ?? 0 > 0{
-                        GlobalData.branchName = cbsAccountsObj?.accdata?[0].accountBranch
-                        GlobalData.branchCode = cbsAccountsObj?.accdata?[0].accountBranchCode
+                        GlobalData.branchName = self.cbsAccountsObj?.accdata?[0].accountBranch
+                        GlobalData.branchCode = self.cbsAccountsObj?.accdata?[0].accountBranchCode
                         
                         self.tableView.delegate = self
                         self.tableView.dataSource = self

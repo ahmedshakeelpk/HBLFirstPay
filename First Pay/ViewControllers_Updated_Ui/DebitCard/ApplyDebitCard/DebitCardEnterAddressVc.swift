@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 import SwiftKeychainWrapper
 class DebitCardEnterAddressVc: BaseClassVC, UITextFieldDelegate {
     var Address : String?

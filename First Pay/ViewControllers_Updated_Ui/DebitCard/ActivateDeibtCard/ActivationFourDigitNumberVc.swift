@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 import SwiftKeychainWrapper
 var DebitCardLast4digit : String?
 class ActivationFourDigitNumberVc: BaseClassVC, UITextFieldDelegate {

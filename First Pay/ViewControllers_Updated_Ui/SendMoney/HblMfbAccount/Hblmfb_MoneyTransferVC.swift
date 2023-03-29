@@ -9,7 +9,7 @@
 import UIKit
 import KYDrawerController
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 import MapKit
 import ContactsUI
 import libPhoneNumber_iOS

@@ -10,7 +10,7 @@ import UIKit
 import KYDrawerController
 import Toaster
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 import GolootloWebViewLibrary
 import SwiftyRSA
 import SafariServices

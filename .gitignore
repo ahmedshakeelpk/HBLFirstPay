@@ -2,6 +2,7 @@
 *.DS_Store
 .AppleDouble
 .LSOverride
+.idea/
 
 # Icon must end with two \r
 Icon
@@ -45,12 +46,12 @@ DerivedData/
 !default.perspectivev3
 xcuserdata/
 
+
+
 ## Other
 *.moved-aside
-.xcuserstate
-First Pay.xcworkspace/
-xcuserdata/
-xcodeproj/
+*.xcuserstate
+
 ## Obj-C/Swift specific
 *.hmap
 *.ipa
@@ -89,12 +90,13 @@ Carthage/Build
 # For more information about the recommended setup visit:
 # https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Gitignore.md
 
-#fastlane/report.xml
-#fastlane/Preview.html
-#fastlane/screenshots
-#fastlane/test_output
-#fastlane/.env
-#fastlane/README.md
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/.env
+fastlane/README.md
+fastlane/*.p8
 *.xcscmblueprint
 
 vendor

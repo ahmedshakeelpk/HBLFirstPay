@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 class Billpayment_MainVC: BaseClassVC {
     var billCompanyObj : BillPaymentCompanies?
     var filteredCompanies = [SingleCompany]()

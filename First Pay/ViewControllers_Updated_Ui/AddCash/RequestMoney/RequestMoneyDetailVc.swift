@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 import SwiftKeychainWrapper
 import ContactsUI
 import libPhoneNumber_iOS
@@ -113,6 +113,10 @@ contactPicker.delegate = self
           print(compelteUrl)
           print(header)
           NetworkManager.sharedInstance.enableCertificatePinning()
+          
+          
+          let sessionManger = APIs.shared.sessionManger(timeOut: 20)
+          
           NetworkManager.sharedInstance.sessionManager?.request(compelteUrl, method: .post, parameters: params , encoding: JSONEncoding.default, headers:header).responseObject { [self] (response: DataResponse<TitleFetchModel>) in
               
               self.hideActivityIndicator()

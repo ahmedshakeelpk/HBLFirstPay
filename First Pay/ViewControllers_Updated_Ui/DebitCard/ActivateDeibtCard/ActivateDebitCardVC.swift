@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 import SwiftKeychainWrapper
 var accountDebitCardId : String?
 class ActivateDebitCardVC: BaseClassVC {

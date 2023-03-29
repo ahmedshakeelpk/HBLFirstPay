@@ -9,7 +9,7 @@
 import UIKit
 import iOSDropDown
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 import SwiftKeychainWrapper
 var isFromReason : Bool = false
 class MoneyTransfer_ReasonVC: BaseClassVC {

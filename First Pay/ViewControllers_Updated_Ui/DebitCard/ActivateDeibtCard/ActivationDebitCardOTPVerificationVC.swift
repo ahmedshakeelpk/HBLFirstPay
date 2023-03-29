@@ -9,7 +9,7 @@
 import UIKit
 import OTPTextField
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 import SwiftKeychainWrapper
 import SwiftyRSA
 class ActivationDebitCardOTPVerificationVC: BaseClassVC, UITextFieldDelegate {

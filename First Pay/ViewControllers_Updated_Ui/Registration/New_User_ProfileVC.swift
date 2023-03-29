@@ -9,7 +9,7 @@
 import UIKit
 import IQDropDownTextField
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 import SwiftKeychainWrapper
 import iOSDropDown
 var City_flag = ""

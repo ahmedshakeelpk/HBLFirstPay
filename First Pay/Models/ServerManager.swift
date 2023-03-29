@@ -12,7 +12,6 @@ import Alamofire
 import UIKit
 import KYDrawerController
 
-import AlamofireObjectMapper
 import MapKit
 import PinCodeTextField
 import SwiftKeychainWrapper
@@ -23,17 +22,18 @@ import CryptoSwift
 import RNCryptor
 
 
-import AlamofireObjectMapper
+import ObjectMapper
 import SwiftKeychainWrapper
 
-var alamoFireManager: SessionManager? = {
+var alamoFireManager: Session? = {
     let configuration = URLSessionConfiguration.default
-    configuration.timeoutIntervalForRequest = 410
-    configuration.timeoutIntervalForResource = 410
-    let alamoFireManager = Alamofire.SessionManager(configuration: configuration)
-    return alamoFireManager
+    configuration.timeoutIntervalForRequest = TimeInterval(410)
+    configuration.httpShouldUsePipelining = true
+    let sessionManger = Session(configuration: configuration, startRequestsImmediately: true)
+    return sessionManger
 
 }()
+
 
 struct APIPath {
 

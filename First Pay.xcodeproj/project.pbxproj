@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1816E553294E3D64002392C6 /* City_selectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816E552294E3D64002392C6 /* City_selectionVC.swift */; };
+		1819E4A029D4B5B400FA2756 /* HZProgressHud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819E49F29D4B5B400FA2756 /* HZProgressHud.swift */; };
 		182A13BB2966A72800DAD866 /* TransferAmountSuccessfulVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A13BA2966A72800DAD866 /* TransferAmountSuccessfulVC.swift */; };
 		182A13BD2966BACD00DAD866 /* MiniStatement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 182A13BC2966BACC00DAD866 /* MiniStatement.storyboard */; };
 		1836EEBF29599830007E8D0F /* NewsFeedRootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836EEBE29599830007E8D0F /* NewsFeedRootVC.swift */; };
@@ -358,6 +359,7 @@
 /* Begin PBXFileReference section */
 		17F4FE44546CC4B628AADEDD /* Pods-First PayUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-First PayUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-First PayUITests/Pods-First PayUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1816E552294E3D64002392C6 /* City_selectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City_selectionVC.swift; sourceTree = "<group>"; };
+		1819E49F29D4B5B400FA2756 /* HZProgressHud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HZProgressHud.swift; sourceTree = "<group>"; };
 		182A13BA2966A72800DAD866 /* TransferAmountSuccessfulVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferAmountSuccessfulVC.swift; sourceTree = "<group>"; };
 		182A13BC2966BACC00DAD866 /* MiniStatement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MiniStatement.storyboard; sourceTree = "<group>"; };
 		1836EEBE29599830007E8D0F /* NewsFeedRootVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedRootVC.swift; sourceTree = "<group>"; };
@@ -531,7 +533,7 @@
 		35B07C4928F3E09900114BD0 /* tcUrdu.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = tcUrdu.html; sourceTree = "<group>"; };
 		35B5C561269326E800D7197C /* TestingHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingHome.swift; sourceTree = "<group>"; };
 		35B7F07A2872DCB100BBE800 /* SplashScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenVC.swift; sourceTree = "<group>"; };
-		35E4A0A926D3811B00A83EA1 /* APIs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
+		35E4A0A926D3811B00A83EA1 /* APIs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIs.swift; path = "../First Pay/ViewControllers/APIs.swift"; sourceTree = "<group>"; };
 		35EE7CF9279A8D5700CCE045 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		35EE7CFB279A8EC900CCE045 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
 		5981D67F20754C2DC1518548 /* Pods-First WalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-First WalletTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-First WalletTests/Pods-First WalletTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -752,6 +754,15 @@
 			);
 			name = Pods;
 			sourceTree = "<group>";
+		};
+		1819E49C29D4A1A200FA2756 /* DataContainer */ = {
+			isa = PBXGroup;
+			children = (
+				1819E49F29D4B5B400FA2756 /* HZProgressHud.swift */,
+				35E4A0A926D3811B00A83EA1 /* APIs.swift */,
+			);
+			path = DataContainer;
+			sourceTree = SOURCE_ROOT;
 		};
 		18373E1B29912939005144D2 /* CardIO */ = {
 			isa = PBXGroup;
@@ -1326,6 +1337,7 @@
 		A2848E9F21995A4C00B36D56 = {
 			isa = PBXGroup;
 			children = (
+				1819E49C29D4A1A200FA2756 /* DataContainer */,
 				A2848EAA21995A4C00B36D56 /* First Pay */,
 				A2C96AE224F37FD9002E6B2C /* OneSignalNotificationServiceExtension */,
 				A2848EA921995A4C00B36D56 /* Products */,
@@ -1390,7 +1402,6 @@
 				A2D80B8521998BFC005AFE65 /* SideDrawerVC.swift */,
 				35B7F07A2872DCB100BBE800 /* SplashScreenVC.swift */,
 				A2848EED21996AA200B36D56 /* BaseClassVC.swift */,
-				35E4A0A926D3811B00A83EA1 /* APIs.swift */,
 				A26EE2F422818AEB00704BD3 /* WebViewVC.swift */,
 				A211FE4D24CFE9C100092E7E /* DiscountsVC.swift */,
 				A29F087724F5103C00F58F14 /* NotificationVC.swift */,
@@ -1946,6 +1957,7 @@
 				A2C7D480265FA6E300516B76 /* CompleteAllDiscountList.swift in Sources */,
 				A2848F0121996AB500B36D56 /* UIDropDown.swift in Sources */,
 				A273C2CE265E2B0E004324AA /* BannersModel.swift in Sources */,
+				1819E4A029D4B5B400FA2756 /* HZProgressHud.swift in Sources */,
 				A2D80B8621998BFC005AFE65 /* SideDrawerVC.swift in Sources */,
 				A2AE06462458166600CD88E8 /* GetTimeModel.swift in Sources */,
 				1837C0FF29A73ED80064212A /* LinkBankAccountOTPVerificationVc.swift in Sources */,
@@ -2181,7 +2193,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2239,7 +2251,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -2253,7 +2265,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9D18AC7765C412318CF2910B /* Pods-First Pay.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "First Pay/First Pay.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2270,10 +2282,10 @@
 				);
 				INFOPLIST_FILE = "First Pay/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = FirstPay;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
 					"@executable_path/Frameworks",
+					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2292,6 +2304,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "First Pay-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -2299,7 +2312,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F6DB9EFF47AABFB5E9A5FC64 /* Pods-First Pay.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "First Pay/First Pay.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2315,10 +2328,10 @@
 				);
 				INFOPLIST_FILE = "First Pay/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = FirstPay;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
 					"@executable_path/Frameworks",
+					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

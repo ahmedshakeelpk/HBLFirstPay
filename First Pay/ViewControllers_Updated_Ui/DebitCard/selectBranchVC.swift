@@ -9,7 +9,7 @@
 import UIKit
 import SwiftKeychainWrapper
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
 class selectBranchVC: BaseClassVC, UISearchBarDelegate {
     var getBranchesObj : GetAllBranchesModel?
     var arrBranchList : [String]?
