@@ -272,7 +272,6 @@
 		A2848F0121996AB500B36D56 /* UIDropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2848EF721996AB500B36D56 /* UIDropDown.swift */; };
 		A2848F0221996AB500B36D56 /* CustomAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2848EF821996AB500B36D56 /* CustomAlertVC.swift */; };
 		A28DFE8A2454528A00B2E1F8 /* GetDisputeTypesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28DFE892454528A00B2E1F8 /* GetDisputeTypesModel.swift */; };
-		A28F182D2621C69E00EFB545 /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = A28F182C2621C69E00EFB545 /* OneSignal */; };
 		A28F19302621F7F400EFB545 /* GolootloWebViewLibrary.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2B1C11B24C1AE6B00D9D11A /* GolootloWebViewLibrary.xcframework */; };
 		A28F19312621F7F400EFB545 /* GolootloWebViewLibrary.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A2B1C11B24C1AE6B00D9D11A /* GolootloWebViewLibrary.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A29B3D1A2663DB310033B48D /* loager.json in Resources */ = {isa = PBXBuildFile; fileRef = A29B3D192663DB300033B48D /* loager.json */; };
@@ -309,7 +308,6 @@
 		A2C7D4A5265FAE3400516B76 /* BaneerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C7D4A4265FAE3400516B76 /* BaneerModel.swift */; };
 		A2C96AE424F37FD9002E6B2C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C96AE324F37FD9002E6B2C /* NotificationService.swift */; };
 		A2C96AE824F37FD9002E6B2C /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A2C96AE124F37FD9002E6B2C /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		A2C96AF124F381FC002E6B2C /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = A2C96AF024F381FC002E6B2C /* OneSignal */; };
 		A2CACEAE24FF72E0007FE785 /* GetReasonsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CACEAD24FF72E0007FE785 /* GetReasonsModel.swift */; };
 		A2CF9F542540382400E17C17 /* GetDebitCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CF9F532540382400E17C17 /* GetDebitCardModel.swift */; };
 		A2D506E224B636190046314F /* CommitteeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D506E124B636190046314F /* CommitteeTableViewCell.swift */; };
@@ -713,7 +711,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A28F182D2621C69E00EFB545 /* OneSignal in Frameworks */,
 				A28F19302621F7F400EFB545 /* GolootloWebViewLibrary.xcframework in Frameworks */,
 				A2C2003725D4E9AE00183587 /* Pods_First_Pay.framework in Frameworks */,
 				A25C29D72280218300740BF0 /* CoreLocation.framework in Frameworks */,
@@ -728,7 +725,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2C96AF124F381FC002E6B2C /* OneSignal in Frameworks */,
 				1F75CF3DEC4358B48D83C557 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1620,7 +1616,6 @@
 			);
 			name = "First Pay";
 			packageProductDependencies = (
-				A28F182C2621C69E00EFB545 /* OneSignal */,
 			);
 			productName = "First Wallet";
 			productReference = A2848EA821995A4C00B36D56 /* FirstPay.app */;
@@ -1641,7 +1636,6 @@
 			);
 			name = OneSignalNotificationServiceExtension;
 			packageProductDependencies = (
-				A2C96AF024F381FC002E6B2C /* OneSignal */,
 			);
 			productName = OneSignalNotificationServiceExtension;
 			productReference = A2C96AE124F37FD9002E6B2C /* OneSignalNotificationServiceExtension.appex */;
@@ -1677,7 +1671,6 @@
 			);
 			mainGroup = A2848E9F21995A4C00B36D56;
 			packageReferences = (
-				A2C96AED24F381AA002E6B2C /* XCRemoteSwiftPackageReference "OneSignal-iOS-SDK" */,
 			);
 			productRefGroup = A2848EA921995A4C00B36D56 /* Products */;
 			projectDirPath = "";
@@ -2439,30 +2432,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		A2C96AED24F381AA002E6B2C /* XCRemoteSwiftPackageReference "OneSignal-iOS-SDK" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/OneSignal/OneSignal-iOS-SDK";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.15.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		A28F182C2621C69E00EFB545 /* OneSignal */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A2C96AED24F381AA002E6B2C /* XCRemoteSwiftPackageReference "OneSignal-iOS-SDK" */;
-			productName = OneSignal;
-		};
-		A2C96AF024F381FC002E6B2C /* OneSignal */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A2C96AED24F381AA002E6B2C /* XCRemoteSwiftPackageReference "OneSignal-iOS-SDK" */;
-			productName = OneSignal;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A2848EA021995A4C00B36D56 /* Project object */;
 }

@@ -36,7 +36,7 @@ target 'First Pay' do
   #pod 'GoogleMLKit/BarcodeScanning'
   #pod 'GoogleMLKit/TextRecognition'
   pod 'SCLAlertView', '~> 0.8'
-  #pod 'OneSignal', '~> 3.2'
+  pod 'OneSignal'
   pod 'Toast-Swift', '~> 5.0'
   pod 'IQDropDownTextField'
   #pod 'iOSDropDown'
