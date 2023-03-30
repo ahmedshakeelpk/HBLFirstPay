@@ -4,7 +4,7 @@
 target 'First Pay' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
+  
   # Pods for First Pay
   pod 'IQKeyboardManager'
   pod 'KYDrawerController'
@@ -15,10 +15,10 @@ target 'First Pay' do
   pod 'PinCodeTextField'
   pod 'SwiftKeychainWrapper', '~> 3.0'
   pod 'Siren', '~> 1.0.2'
-#  pod 'SkyFloatingLabelTextField', '~> 3.0'
-#  pod 'CardIO', '~> 5.4'
+  #  pod 'SkyFloatingLabelTextField', '~> 3.0'
+  #  pod 'CardIO', '~> 5.4'
   pod 'iOSDropDown'
-#  pod 'DLRadioButton', '~> 1.4'
+  #  pod 'DLRadioButton', '~> 1.4'
   pod 'Nuke', '~> 7.0'
   pod 'SwiftyRSA'
   pod 'SwiftWebVC'
@@ -30,31 +30,31 @@ target 'First Pay' do
   pod 'CryptoSwift', '~>  1.6.0'
   pod 'RNCryptor', '~> 5.0.3'
   pod 'JHTAlertController'
-   pod 'MBProgressHUD', '~> 1.2'
-    pod 'SDWebImage', '~> 4.3'
+  pod 'MBProgressHUD', '~> 1.2'
+  pod 'SDWebImage', '~> 4.3'
   pod 'Kingfisher', '~> 4.0'
   #pod 'GoogleMLKit/BarcodeScanning'
   #pod 'GoogleMLKit/TextRecognition'
   pod 'SCLAlertView', '~> 0.8'
-   #pod 'OneSignal', '~> 3.2'
-   pod 'Toast-Swift', '~> 5.0'
+  #pod 'OneSignal', '~> 3.2'
+  pod 'Toast-Swift', '~> 5.0'
   pod 'IQDropDownTextField'
   #pod 'iOSDropDown'
-   pod 'PasswordTextField', '~> 1.2'
-#   pod 'OneSignalXCFramework', '>= 3.0.0', '< 4.0'
+  pod 'PasswordTextField', '~> 1.2'
+  #   pod 'OneSignalXCFramework', '>= 3.0.0', '< 4.0'
   pod 'PinCodeInputView'
   pod 'OTPTextField', '~> 1.1'
   #pod 'CryptoSwift', '~> 1.6.0'
-   pod 'SideMenu', '~> 5.0.0'
+  pod 'SideMenu', '~> 5.0.0'
   # pod 'IQKeyboardManager'
-# pod 'CardIO' #, '~> 5.4'
-
+  # pod 'CardIO' #, '~> 5.4'
+  
 end
 
 target 'OneSignalNotificationServiceExtension' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
+  
   # Pods for OneSignalNotificationServiceExtension
-
+  
 end
